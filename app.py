@@ -9,7 +9,7 @@ from bucket_sort import (Entry, bucket_sort, insertion_sort, merge_sort,
                          quick_sort, time_it)
 
 st.set_page_config(page_title="Bucket Sort Lab — P-12.61", page_icon="🪣", layout="wide",
-                   initial_sidebar_state="expanded")
+                   initial_sidebar_state="auto")
 
 # =====================================================================  design tokens
 INK = "#0E1A2B"        # deep midnight, main text + sidebar
@@ -40,7 +40,10 @@ st.markdown(f"""
 .stApp {{ background: var(--paper); font-family: var(--sans); color: var(--ink); }}
 .stApp p, .stApp li, .stApp label, .stMarkdown, .stCaption {{ font-family: var(--sans); }}
 .block-container {{ padding-top: 2.2rem; padding-bottom: 4rem; max-width: 1220px; }}
-#MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"] {{ visibility: hidden; height: 0; }}
+#MainMenu, footer, [data-testid="stAppDeployButton"], [data-testid="stDecoration"] {{ visibility: hidden; height: 0; }}
+[data-testid="stExpandSidebarButton"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarCollapseButton"] {{ visibility: visible !important; }}
+.st-key-mobnav {{ display: none; }}
+@media (max-width: 768px) {{ .st-key-mobnav {{ display: block; margin-bottom: 8px; }} .block-container {{ padding-top: 3.4rem; }} .ph h1 {{ font-size: 2.1rem; }} .hero {{ padding: 30px 24px; }} .kpi .v {{ font-size: 1.45rem; }} }}
 header[data-testid="stHeader"] {{ background: transparent; }}
 
 /* ---------- sidebar ---------- */
@@ -318,6 +321,15 @@ with st.sidebar:
     st.write("")
     st.markdown('<div class="sb-team">Data Structures Lab · DUET<br>Submitted to Sir Jamal<br><br>'
                 + "<br>".join(f"{n} · {r[-3:]}" for n, r in TEAM) + "</div>", unsafe_allow_html=True)
+
+
+def _mob_go():
+    st.session_state.page = st.session_state.mobnav_sel
+
+
+st.session_state.mobnav_sel = st.session_state.page
+with st.container(key="mobnav"):
+    st.selectbox("Go to page", PAGES, key="mobnav_sel", on_change=_mob_go)
 
 
 def footer():
