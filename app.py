@@ -186,7 +186,7 @@ REPORT_A = [(1000, 0.31, 2.32, 1.61, 27.85, 0.08), (2000, 0.41, 3.77, 2.91, 91.4
 REPORT_B = [(10, 0.94, 16.78), (100, 1.02, 17.21), (1000, 1.41, 19.39), (10000, 2.42, 18.65),
             (100000, 13.65, 23.16), (1000000, 175.81, 18.00)]
 
-PAGES = ["Overview", "Make data", "Watch bucket-sort", "Race the algorithms",
+PAGES = ["Overview", "Make data", "Watch bucket-sort", "Code visualizer", "Race the algorithms",
          "Experiments & graphs", "Correctness tests", "Source code", "Team & report"]
 
 
@@ -380,7 +380,7 @@ if page == "Overview":
             t, d = tiles[i]
             with col:
                 st.markdown(f'<div class="card"><div class="num">{i+1}</div><h4>{t}</h4><p>{d}</p></div>', unsafe_allow_html=True)
-                st.button(f"Open {t.lower()}", key=f"open{i}", on_click=go_to, args=(PAGES[i + 1],), width="stretch")
+                st.button(f"Open {t.lower()}", key=f"open{i}", on_click=go_to, args=(t,), width="stretch")
     footer()
 
 
@@ -522,6 +522,11 @@ for bucket in B:                   # Step 3: gather               O(n + N)
         entries[i] = e
         i += 1""", language="python")
     footer()
+
+
+elif page == "Code visualizer":
+    import code_viz
+    code_viz.render(page_header, stat, footer)
 
 
 elif page == "Race the algorithms":
